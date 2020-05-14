@@ -9,8 +9,6 @@ const timestamp = date.getTime() / 1000;
 const privateKey = process.env.MARVEL_PRIVATE_KEY;
 const publicKey = process.env.MARVEL_PUBLIC_KEY;
 const hash = md5(timestamp + privateKey + publicKey);
-console.log(timestamp);
-console.log(hash);
 
 const urlBase = `https://gateway.marvel.com/v1/public/characters?orderBy=name&limit=10`;
 const urlCredential = `&apikey=${publicKey}&ts=${timestamp}&hash=${hash}`;

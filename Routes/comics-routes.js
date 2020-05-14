@@ -9,8 +9,6 @@ const timestamp = date.getTime() / 1000;
 const privateKey = process.env.MARVEL_PRIVATE_KEY;
 const publicKey = process.env.MARVEL_PUBLIC_KEY;
 const hash = md5(timestamp + privateKey + publicKey);
-console.log(timestamp);
-console.log(hash);
 
 let url = `https://gateway.marvel.com/v1/public/comics?limit=100&orderBy=title&apikey=${publicKey}&ts=${timestamp}&hash=${hash}`;
 //  Read comics
