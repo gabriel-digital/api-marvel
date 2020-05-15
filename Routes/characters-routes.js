@@ -45,7 +45,6 @@ router.get("/:page", async (req, res) => {
 // Read characters filtered by name
 router.post("/", async (req, res) => {
   try {
-    console.log(req.fields);
     const url =
       urlBase +
       `&name=${req.fields.name}` +
