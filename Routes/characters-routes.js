@@ -3,7 +3,7 @@ const router = express.Router();
 const md5 = require("md5");
 const axios = require("axios");
 
-// prepare hash
+// prepare hash for marvel API
 const date = new Date();
 const timestamp = date.getTime() / 1000;
 const privateKey = process.env.MARVEL_PRIVATE_KEY;

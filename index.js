@@ -14,9 +14,9 @@ app.use(formidable());
 app.use(compression());
 
 // import & use routes
-const charactersRoutes = require("./routes/characters-routes.js");
+const charactersRoutes = require("./Routes/characters-routes.js");
 app.use(charactersRoutes);
-const comicsRoutes = require("./routes/comics-routes.js");
+const comicsRoutes = require("./Routes/comics-routes.js");
 app.use(comicsRoutes);
 
 // handle 404 errors
