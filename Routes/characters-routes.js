@@ -12,13 +12,28 @@ const hash = md5(timestamp + privateKey + publicKey);
 
 const urlBase = `https://gateway.marvel.com/v1/public/characters?orderBy=name&limit=10`;
 const urlCredential = `&apikey=${publicKey}&ts=${timestamp}&hash=${hash}`;
-let url = "";
+
+let urlOffset = `&offset=0`;
+
 //  Read characters
+router.get("/", async (req, res) => {
+  try {
+    const url = urlBase + urlOffset + urlCredential;
+    const response = await axios.get(url);
+    const characters = response.data.data;
+    return res.json(characters);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+//  Read characters with pagination
 router.get("/:page", async (req, res) => {
   try {
-    const urlOffset = `&offset=${(req.params.page - 1) * 10}`;
-    console.log(req.params.page);
-    url = urlBase + urlOffset + urlCredential;
+    if (req.params) {
+      urlOffset = `&offset=${(req.params.page - 1) * 10}`;
+    }
+    const url = urlBase + urlOffset + urlCredential;
     const response = await axios.get(url);
     const characters = response.data.data;
     return res.json(characters);
@@ -31,7 +46,12 @@ router.get("/:page", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     console.log(req.fields);
-    url = urlBase + "&name=" + req.fields.name + urlCredential;
+    const url =
+      urlBase +
+      `&name=${req.fields.name}` +
+      urlOffset +
+      req.fields.name +
+      urlCredential;
     const response = await axios.get(url);
     const characters = response.data.data;
     return res.json(characters);
