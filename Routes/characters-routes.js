@@ -1,7 +1,7 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const md5 = require("md5");
-const axios = require("axios");
+const md5 = require('md5');
+const axios = require('axios');
 
 // prepare hash for marvel API
 const date = new Date();
@@ -16,7 +16,7 @@ const urlCredential = `&apikey=${publicKey}&ts=${timestamp}&hash=${hash}`;
 let urlOffset = `&offset=0`;
 
 //  Read characters
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const url = urlBase + urlOffset + urlCredential;
     const response = await axios.get(url);
@@ -28,7 +28,7 @@ router.get("/", async (req, res) => {
 });
 
 //  Read characters with pagination
-router.get("/:page", async (req, res) => {
+router.get('/:page', async (req, res) => {
   try {
     if (req.params) {
       urlOffset = `&offset=${(req.params.page - 1) * 10}`;
@@ -43,11 +43,11 @@ router.get("/:page", async (req, res) => {
 });
 
 // Read characters filtered by name
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const url =
       urlBase +
-      `&name=${req.fields.name}` +
+      `&nameStartsWith==${req.fields.name}` +
       urlOffset +
       req.fields.name +
       urlCredential;
@@ -60,7 +60,7 @@ router.post("/", async (req, res) => {
 });
 
 //  Read collection of comics for a character
-router.post("/character", async (req, res) => {
+router.post('/character', async (req, res) => {
   try {
     const response = await axios.get(
       `${req.fields.collection}?limit=100&apikey=${publicKey}&ts=${timestamp}&hash=${hash}`
