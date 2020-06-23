@@ -45,12 +45,7 @@ router.get('/:page', async (req, res) => {
 // Read characters filtered by name
 router.post('/', async (req, res) => {
   try {
-    const url =
-      urlBase +
-      `&nameStartsWith==${req.fields.name}` +
-      urlOffset +
-      req.fields.name +
-      urlCredential;
+    const url = urlBase + `&nameStartsWith==${req.fields.name}` + urlCredential;
     const response = await axios.get(url);
     const characters = response.data.data;
     return res.json(characters);
