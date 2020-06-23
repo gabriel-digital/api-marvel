@@ -10,7 +10,7 @@ const privateKey = process.env.MARVEL_PRIVATE_KEY;
 const publicKey = process.env.MARVEL_PUBLIC_KEY;
 const hash = md5(timestamp + privateKey + publicKey);
 
-let urlBase = `https://gateway.marvel.com/v1/public/characters?orderBy=name&limit=10`;
+const urlBase = `https://gateway.marvel.com/v1/public/characters?orderBy=name&limit=10`;
 const urlCredential = `&apikey=${publicKey}&ts=${timestamp}&hash=${hash}`;
 
 let urlOffset = `&offset=0`;
@@ -45,8 +45,7 @@ router.get('/:page', async (req, res) => {
 // Read characters filtered by name
 router.post('/', async (req, res) => {
   try {
-    urlBase = `https://gateway.marvel.com/v1/public/characters?nameStartsWith==${req.fields.name}&orderBy=name&limit=10`;
-    const url = urlBase + urlCredential;
+    const url = urlBase + `&nameStartsWith==${req.fields.name}` + urlCredential;
     const response = await axios.get(url);
     const characters = response.data.data;
     return res.json(characters);
