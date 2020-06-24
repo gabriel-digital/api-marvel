@@ -10,15 +10,17 @@ const privateKey = process.env.MARVEL_PRIVATE_KEY;
 const publicKey = process.env.MARVEL_PUBLIC_KEY;
 const hash = md5(timestamp + privateKey + publicKey);
 
-const urlBase = `https://gateway.marvel.com/v1/public/comics?limit=100orderBy=title&limit=10`;
+const urlBase = `https://gateway.marvel.com/v1/public/series?orderBy=title&limit=10`;
 const urlCredential = `&apikey=${publicKey}&ts=${timestamp}&hash=${hash}`;
 
-let url = `https://gateway.marvel.com/v1/public/comics?limit=100&orderBy=title&apikey=${publicKey}&ts=${timestamp}&hash=${hash}`;
+let url = `https://gateway.marvel.com/v1/public/seriesn?limit=100&orderBy=title&apikey=${publicKey}&ts=${timestamp}&hash=${hash}`;
 //  Read comics
 router.get('/comics', async (req, res) => {
   try {
     const url = urlBase + urlCredential;
     const response = await axios.get(url);
+    console.log(urlBase);
+    console.log(response.data);
     const comics = response.data.data;
     return res.json(comics);
   } catch (error) {
@@ -34,6 +36,8 @@ router.get('/comics/:page', async (req, res) => {
     }
     const url = urlBase + urlOffset + urlCredential;
     const response = await axios.get(url);
+    console.log(urlBase);
+    console.log(response.data);
     const comics = response.data.data;
     return res.json(comics);
   } catch (error) {
